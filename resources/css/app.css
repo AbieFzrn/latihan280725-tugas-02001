@@ -1,0 +1,9 @@
+/* Import standar Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Aturan CSS kustom Anda bisa ditambahkan di sini */
+body {
+    font-family: 'Inter', sans-serif;
+}
