@@ -25,6 +25,9 @@
                     <x-nav-link :href="route('admin.foto.index')" :active="request()->routeIs('admin.foto.*')">
                         {{ __('Galeri') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
+                        {{ __('Pengaturan') }}
+                    </x-nav-link>
                     </div>
 
             <!-- Settings Dropdown -->

@@ -8,28 +8,37 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form action="{{ route('admin.posts.update', $post) }}" method="POST">
+                <div class="p-6 text-gray-900" x-data="{ selectedCategory: '{{ old('kategori_id', $post->kategori_id) }}', infoTerkiniId: '{{ $infoTerkiniId }}' }">
+                    <form action="{{ route('admin.posts.update', $post) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <!-- Judul -->
                         <div>
                             <x-input-label for="judul" :value="__('Judul')" />
                             <x-text-input id="judul" class="block mt-1 w-full" type="text" name="judul" :value="old('judul', $post->judul)" required autofocus />
-                            <x-input-error :messages="$errors->get('judul')" class="mt-2" />
                         </div>
 
                         <!-- Kategori -->
                         <div class="mt-4">
                             <x-input-label for="kategori_id" :value="__('Kategori')" />
-                            <select name="kategori_id" id="kategori_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            <select name="kategori_id" id="kategori_id" x-model="selectedCategory" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->id }}" @selected(old('kategori_id', $post->kategori_id) == $kategori->id)>
                                         {{ $kategori->judul }}
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('kategori_id')" class="mt-2" />
+                        </div>
+                        
+                        <!-- Gambar Unggulan (Hanya muncul jika kategori 'Informasi Terkini') -->
+                        <div class="mt-4" x-show="selectedCategory == infoTerkiniId" x-transition>
+                            <x-input-label for="gambar" :value="__('Ganti Gambar Unggulan (Opsional)')" />
+                            @if($post->gambar)
+                                <img src="{{ asset('storage/' . $post->gambar) }}" alt="Gambar saat ini" class="w-48 h-auto rounded-md my-2">
+                            @endif
+                            <input type="file" name="gambar" id="gambar" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                            <p class="mt-1 text-sm text-gray-500">Kosongkan jika tidak ingin mengganti gambar.</p>
+                            <x-input-error :messages="$errors->get('gambar')" class="mt-2" />
                         </div>
 
                         <!-- Isi -->
@@ -51,3 +60,4 @@
         </div>
     </div>
 </x-app-layout>
+    

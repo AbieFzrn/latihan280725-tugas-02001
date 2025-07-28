@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\FotoController;
+use App\Http\Controllers\Admin\SettingController; // <-- Tambahkan ini
 
 /*
 |--------------------------------------------------------------------------
@@ -18,18 +19,20 @@ Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
 
 // --- RUTE DASHBOARD (STANDAR BREEZE) ---
-// Route ini HARUS ada dan bernama 'dashboard' untuk redirect setelah login.
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 // --- RUTE ADMIN LAINNYA ---
-// Grup ini untuk semua halaman manajemen di dalam panel admin.
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('posts', PostController::class);
     Route::resource('foto', FotoController::class)->except(['show', 'edit', 'update']);
+    
+    // RUTE PENGATURAN YANG HILANG
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
 
@@ -41,5 +44,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Memuat rute otentikasi (login, register, dll.)
+// Memuat rute otentikasi
 require __DIR__.'/auth.php';

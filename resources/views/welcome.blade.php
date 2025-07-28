@@ -25,12 +25,12 @@
         <p class="text-sm text-gray-600">maju seiring perkembangan digital</p>
     </header>
 
-    {{-- Placeholder Gambar Besar --}}
-    <div class="w-full bg-gray-300 h-64 flex items-center justify-center text-gray-500">
-        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 14m6-6l.01.01"></path></svg>
+    {{-- Gambar Utama (Hero) Dinamis --}}
+    <div class="w-full bg-gray-300 h-64">
+        <img src="{{ isset($settings['hero_image']) ? asset('storage/' . $settings['hero_image']) : 'https://placehold.co/1200x400/334155/e2e8f0?text=SMK+Indonesia+Digital' }}" alt="Foto Sekolah" class="w-full h-full object-cover">
     </div>
 
-    {{-- Galeri Kegiatan Sekolah --}}
+    {{-- Banner Judul --}}
     <section class="bg-blue-600 p-2">
         <h2 class="text-white text-center font-semibold">GALERI KEGIATAN SEKOLAH</h2>
     </section>
@@ -100,11 +100,11 @@
             </div>
         </div>
 
-        {{-- Peta Sekolah --}}
+        {{-- Peta Sekolah Dinamis --}}
         <div class="mt-12">
             <h2 class="text-xl font-bold text-gray-900 mb-4">PETA SEKOLAH</h2>
             <div class="rounded-lg">
-                <img src="https://i.imgur.com/uW6n97D.png" alt="Peta Sekolah" class="w-full h-auto rounded-md">
+                <img src="{{ isset($settings['map_image']) ? asset('storage/' . $settings['map_image']) : 'https://i.imgur.com/uW6n97D.png' }}" alt="Peta Sekolah" class="w-full h-auto rounded-md">
             </div>
         </div>
     </main>
